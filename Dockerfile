@@ -1,9 +1,12 @@
 FROM php:8.3-cli-alpine
 
-RUN apk add --no-cache bash git openssh-client rsync
+RUN apk add --no-cache bash git openssh-client rsync curl
 
-COPY --chmod=755 deployer.phar /bin/dep
+# Download deployer.phar from official source
+RUN curl -LO https://deployer.org/deployer.phar \
+    && chmod +x deployer.phar \
+    && mv deployer.phar /bin/dep
 
 WORKDIR /app
 
-ENTRYPOINT ["/bin/dep"]
+CMD ["dep", "--version"]
