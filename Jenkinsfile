@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/seshuadi969/deployer.git'
+                git branch: 'master', url: 'https://github.com/seshuadi969/deployer.git'
             }
         }
 
@@ -26,7 +26,7 @@ pipeline {
                         docker rm deployer-container
                     fi
 
-                    # Run new container
+                    # Run new container on port 8080
                     docker run -d -p 8080:8080 --name deployer-container deployer-app
                     '''
                 }
