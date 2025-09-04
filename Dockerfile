@@ -1,22 +1,18 @@
-# Use lightweight PHP base image
 FROM php:8.3-cli-alpine
 
-# Install useful tools
+# Install required tools
 RUN apk add --no-cache bash git openssh-client rsync curl
 
-# Install Deployer (CLI tool)
+# Install Deployer CLI
 RUN curl -LO https://deployer.org/deployer.phar \
     && chmod +x deployer.phar \
     && mv deployer.phar /bin/dep
 
-# Set working directory
+# Workdir
 WORKDIR /app
 
-# Copy your application code into container
+# Copy project files
 COPY . /app
 
-# Expose port 8080 inside container
-EXPOSE 8080
-
-# Start PHP built-in server
+# Start PHP server serving /app
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "/app"]
